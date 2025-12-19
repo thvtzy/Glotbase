@@ -42,8 +42,9 @@ export interface AffixRule {
     pattern: string;            // e.g., "$ROOT"
     replacement: string;        // e.g., "me+$ROOT"
     resultingPOS?: PartOfSpeech;
-    description: string;
-    example: string;
+    description?: string;
+    example?: string;
+    category?: string; // e.g., "tense", "aspect", "mood", "voice", "number", "case"
 }
 
 export interface Sentence {

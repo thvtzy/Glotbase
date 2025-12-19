@@ -7,11 +7,13 @@ import './AffixCalculator.css';
 
 export function AffixCalculator() {
     const { words, getRootWords, addWord } = useLexicon();
-    const { rules, addRule, deleteRule } = useAffix();
+    const { rules, addRule, updateRule, deleteRule } = useAffix();
 
     const [showRuleForm, setShowRuleForm] = useState(false);
-    const [selectedRootId, setSelectedRootId] = useState<string>('');
+    const [editingRuleId, setEditingRuleId] = useState<string | null>(null);
+    const [selectedRootId, setSelectedRootId] = useState<string>(''); // Single selection
     const [selectedRules, setSelectedRules] = useState<string[]>([]);
+
 
     const [ruleFormData, setRuleFormData] = useState({
         name: '',
@@ -21,17 +23,35 @@ export function AffixCalculator() {
         resultingPOS: '' as PartOfSpeech | '',
         description: '',
         example: '',
+        category: '',
     });
 
     const rootWords = getRootWords();
     const selectedRoot = words.find(w => w.id === selectedRootId);
 
-    const handleAddRule = (e: React.FormEvent) => {
+
+
+    const handleSubmitRule = (e: React.FormEvent) => {
         e.preventDefault();
-        addRule({
-            ...ruleFormData,
-            resultingPOS: ruleFormData.resultingPOS || undefined,
-        });
+
+        if (editingRuleId) {
+            // Update existing rule
+            updateRule(editingRuleId, {
+                ...ruleFormData,
+                resultingPOS: ruleFormData.resultingPOS || undefined,
+                category: ruleFormData.category || undefined,
+            });
+            setEditingRuleId(null);
+        } else {
+            // Add new rule
+            addRule({
+                ...ruleFormData,
+                resultingPOS: ruleFormData.resultingPOS || undefined,
+                category: ruleFormData.category || undefined,
+            });
+        }
+
+        // Reset form
         setRuleFormData({
             name: '',
             type: 'prefix',
@@ -40,8 +60,42 @@ export function AffixCalculator() {
             resultingPOS: '',
             description: '',
             example: '',
+            category: '',
         });
         setShowRuleForm(false);
+    };
+
+    const handleEditRule = (ruleId: string) => {
+        const rule = rules.find(r => r.id === ruleId);
+        if (rule) {
+            setRuleFormData({
+                name: rule.name,
+                type: rule.type,
+                pattern: rule.pattern,
+                replacement: rule.replacement,
+                resultingPOS: rule.resultingPOS || '',
+                description: rule.description || '',
+                example: rule.example || '',
+                category: rule.category || '',
+            });
+            setEditingRuleId(ruleId);
+            setShowRuleForm(true);
+        }
+    };
+
+    const handleCancelEdit = () => {
+        setEditingRuleId(null);
+        setShowRuleForm(false);
+        setRuleFormData({
+            name: '',
+            type: 'prefix',
+            pattern: '$ROOT',
+            replacement: '',
+            resultingPOS: '',
+            description: '',
+            example: '',
+            category: '',
+        });
     };
 
     const handleGenerateWords = () => {
@@ -89,6 +143,7 @@ export function AffixCalculator() {
                 rule: rule.name,
                 original: selectedRoot.romanization,
                 derived: derived.romanization || selectedRoot.romanization,
+                nativeScript: derived.nativeScript || selectedRoot.nativeScript,
             };
         }).filter(Boolean);
     };
@@ -113,7 +168,7 @@ export function AffixCalculator() {
                     </div>
 
                     {showRuleForm && (
-                        <form className="rule-form" onSubmit={handleAddRule}>
+                        <form className="rule-form" onSubmit={handleSubmitRule}>
                             <div className="form-row">
                                 <div className="form-group">
                                     <label>Rule Name</label>
@@ -189,7 +244,16 @@ export function AffixCalculator() {
                                 />
                             </div>
 
-                            <button type="submit" className="primary">Add Rule</button>
+                            <div className="button-group-inline">
+                                <button type="submit" className="primary">
+                                    {editingRuleId ? '💾 Update Rule' : '+ Add Rule'}
+                                </button>
+                                {editingRuleId && (
+                                    <button type="button" onClick={handleCancelEdit} className="secondary">
+                                        Cancel
+                                    </button>
+                                )}
+                            </div>
                         </form>
                     )}
 
@@ -205,7 +269,22 @@ export function AffixCalculator() {
                                             <h4>{rule.name}</h4>
                                             <span className="rule-type tag">{rule.type}</span>
                                         </div>
-                                        <button onClick={() => deleteRule(rule.id)} className="delete-btn">🗑️</button>
+                                        <div className="rule-actions">
+                                            <button
+                                                onClick={() => handleEditRule(rule.id)}
+                                                className="edit-btn"
+                                                title="Edit rule"
+                                            >
+                                                ✏️
+                                            </button>
+                                            <button
+                                                onClick={() => deleteRule(rule.id)}
+                                                className="delete-btn"
+                                                title="Delete rule"
+                                            >
+                                                🗑️
+                                            </button>
+                                        </div>
                                     </div>
                                     <div className="rule-pattern">
                                         Pattern: <code>{rule.replacement}</code>

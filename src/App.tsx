@@ -3,6 +3,7 @@ import { Dashboard } from './components/Dashboard';
 import { SmartLexicon } from './components/SmartLexicon';
 import { ExportImport } from './components/ExportImport';
 import { AffixCalculator } from './components/AffixCalculator';
+import { SentenceBuilder } from './components/SentenceBuilder';
 import { LexiconProvider } from './context/LexiconContext';
 import { AffixProvider } from './context/AffixContext';
 import './index.css';
@@ -76,12 +77,7 @@ function App() {
                             {currentView === 'lexicon' && <SmartLexicon />}
                             {currentView === 'export' && <ExportImport />}
                             {currentView === 'affix' && <AffixCalculator />}
-                            {currentView === 'sentence' && (
-                                <div className="coming-soon card">
-                                    <h2>✍️ Sentence Builder</h2>
-                                    <p>Coming soon! This feature will help you test VSO word order and build example sentences.</p>
-                                </div>
-                            )}
+                            {currentView === 'sentence' && <SentenceBuilder />}
                         </div>
                     </main>
                 </div>
