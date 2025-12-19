@@ -2,7 +2,7 @@
 
 **GlotBase** is a modern web application for building and documenting constructed languages (conlangs). Designed specifically to accommodate complex language systems with various writing systems, word orders, and gender systems.
 
-![GlotBase Screenshot](https://img.shields.io/badge/Status-MVP_Complete-brightgreen)
+![Status](https://img.shields.io/badge/Status-Work_In_Progress-orange)
 ![React](https://img.shields.io/badge/React-18-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Vite](https://img.shields.io/badge/Vite-6-purple)
@@ -367,4 +367,5 @@ If you find GlotBase useful, please consider giving it a star! ⭐
 ---
 
 **Made with love for conlangers, by conlangers.**
+
 
