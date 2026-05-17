@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { WordEntry } from '../types/schema';
 import { Storage, STORAGE_KEYS } from '../utils/storage';
 
@@ -30,7 +30,7 @@ export function LexiconProvider({ children }: { children: ReactNode }) {
     const addWord = (wordData: Omit<WordEntry, 'id' | 'createdAt' | 'updatedAt'>) => {
         const newWord: WordEntry = {
             ...wordData,
-            id: `word-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            id: `word-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
             createdAt: new Date(),
             updatedAt: new Date(),
         };
