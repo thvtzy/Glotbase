@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { AffixRule } from '../types/schema';
 import { Storage, STORAGE_KEYS } from '../utils/storage';
 
@@ -24,7 +24,7 @@ export function AffixProvider({ children }: { children: ReactNode }) {
     const addRule = (ruleData: Omit<AffixRule, 'id'>) => {
         const newRule: AffixRule = {
             ...ruleData,
-            id: `affix-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            id: `affix-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
         };
         setRules(prev => [...prev, newRule]);
     };
