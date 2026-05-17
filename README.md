@@ -18,6 +18,7 @@ Real-time statistics, progress tracking, and analytics for your conlang developm
 - **Multi-Script Support** - Jawi, Arabic, Tengwar, or any custom writing system
 - **RTL Support** - Automatic right-to-left rendering
 - **Comprehensive Fields** - Native script, romanization, IPA, etymology, gender, tags
+- **IPA Virtual Keyboard** - Click-to-insert vowels, consonants, diacritics, and tone marks
 - **Custom Gender System** - Neutral, Masculine, Feminine, Divine, or user-defined
 - **Full CRUD** - Create, read, update, delete with search
 
@@ -228,7 +229,6 @@ All RTL (right-to-left) scripts automatically supported.
 - Edit rules functionality
 
 ### 🚧 Planned (v3.0)
-- **IPA Virtual Keyboard** - Click-to-insert IPA symbols
 - **Grammar Wiki** - Markdown documentation
 - **Phonology Editor** - Sound inventory management
 - **Batch Generation** - Multiple root words at once

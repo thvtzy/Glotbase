@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLexicon } from '../context/LexiconContext';
 import { useAffix } from '../context/AffixContext';
 import './Dashboard.css';
@@ -29,6 +28,9 @@ export function Dashboard() {
     });
 
     const completionPercentage = Math.min((words.length / 100) * 100, 100);
+    const recentWords = [...words]
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+        .slice(0, 5);
 
     return (
         <div className="dashboard">
@@ -129,19 +131,16 @@ export function Dashboard() {
                     <div className="card">
                         <h3>🆕 Recent Additions</h3>
                         <div className="recent-words">
-                            {words
-                                .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-                                .slice(0, 5)
-                                .map(word => (
-                                    <div key={word.id} className="recent-word-item">
-                                        <div className="word-scripts">
-                                            <span className="native-text rtl">{word.nativeScript}</span>
-                                            <span className="romanization">{word.romanization}</span>
-                                        </div>
-                                        <span className="word-pos tag">{word.partOfSpeech}</span>
-                                        <span className="word-definition">{word.definition}</span>
+                            {recentWords.map(word => (
+                                <div key={word.id} className="recent-word-item">
+                                    <div className="word-scripts">
+                                        <span className="native-text rtl">{word.nativeScript}</span>
+                                        <span className="romanization">{word.romanization}</span>
                                     </div>
-                                ))}
+                                    <span className="word-pos tag">{word.partOfSpeech}</span>
+                                    <span className="word-definition">{word.definition}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 )}

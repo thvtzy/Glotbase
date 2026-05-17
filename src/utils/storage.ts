@@ -14,10 +14,11 @@ export class Storage {
         try {
             const item = localStorage.getItem(key);
             if (!item) return defaultValue;
-            return JSON.parse(item, (key, value) => {
+            return JSON.parse(item, (_key, value) => {
                 // Revive Date objects
                 if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
-                    return new Date(value);
+                    const date = new Date(value);
+                    return Number.isNaN(date.getTime()) ? value : date;
                 }
                 return value;
             });
