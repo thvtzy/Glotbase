@@ -3,6 +3,7 @@ import { useLexicon } from '../context/LexiconContext';
 import { PartOfSpeech, Gender } from '../types/schema';
 import { IPA_CATEGORIES } from '../utils/ipaHelper';
 import './SmartLexicon.css';
+import './IpaKeyboard.css';
 
 export function SmartLexicon() {
     const { words, addWord, updateWord, deleteWord, searchWords } = useLexicon();
