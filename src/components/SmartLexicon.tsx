@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useLexicon } from '../context/LexiconContext';
 import { PartOfSpeech, Gender } from '../types/schema';
+import { IPA_CATEGORIES } from '../utils/ipaHelper';
 import './SmartLexicon.css';
+import './IpaKeyboard.css';
 
 export function SmartLexicon() {
     const { words, addWord, updateWord, deleteWord, searchWords } = useLexicon();
     const [searchQuery, setSearchQuery] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [showIpaKeyboard, setShowIpaKeyboard] = useState(false);
 
     const [formData, setFormData] = useState({
         nativeScript: '',
@@ -24,7 +27,11 @@ export function SmartLexicon() {
 
     const displayWords = searchQuery ? searchWords(searchQuery) : words;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const insertIpaSymbol = (symbol: string) => {
+        setFormData(prev => ({ ...prev, ipa: `${prev.ipa}${symbol}` }));
+    };
+
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         const wordData = {
@@ -125,14 +132,74 @@ export function SmartLexicon() {
                             />
                         </div>
 
-                        <div className="form-group">
-                            <label>IPA</label>
+                        <div className="form-group ipa-form-group">
+                            <div className="field-header">
+                                <label>IPA</label>
+                                <button
+                                    type="button"
+                                    className="text-button"
+                                    onClick={() => setShowIpaKeyboard(!showIpaKeyboard)}
+                                >
+                                    {showIpaKeyboard ? 'Hide keyboard' : 'Show keyboard'}
+                                </button>
+                            </div>
                             <input
                                 type="text"
                                 value={formData.ipa}
                                 onChange={(e) => setFormData({ ...formData, ipa: e.target.value })}
                                 placeholder="International Phonetic Alphabet"
                             />
+                            {showIpaKeyboard && (
+                                <div className="ipa-keyboard" aria-label="IPA virtual keyboard">
+                                    <div className="ipa-section">
+                                        <span className="ipa-section-title">Vowels</span>
+                                        <div className="ipa-symbol-grid">
+                                            {Object.values(IPA_CATEGORIES.vowels).flat().map(symbol => (
+                                                <button
+                                                    key={`vowel-${symbol}`}
+                                                    type="button"
+                                                    className="ipa-symbol"
+                                                    onClick={() => insertIpaSymbol(symbol)}
+                                                >
+                                                    {symbol}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="ipa-section">
+                                        <span className="ipa-section-title">Consonants</span>
+                                        <div className="ipa-symbol-grid">
+                                            {Object.values(IPA_CATEGORIES.consonants).flat().map(symbol => (
+                                                <button
+                                                    key={`consonant-${symbol}`}
+                                                    type="button"
+                                                    className="ipa-symbol"
+                                                    onClick={() => insertIpaSymbol(symbol)}
+                                                >
+                                                    {symbol}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="ipa-section">
+                                        <span className="ipa-section-title">Diacritics & Tone</span>
+                                        <div className="ipa-symbol-grid">
+                                            {Object.values(IPA_CATEGORIES.diacritics).flat().map(symbol => (
+                                                <button
+                                                    key={`diacritic-${symbol}`}
+                                                    type="button"
+                                                    className="ipa-symbol"
+                                                    onClick={() => insertIpaSymbol(symbol)}
+                                                >
+                                                    {symbol}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="form-group">

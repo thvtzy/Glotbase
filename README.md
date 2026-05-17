@@ -18,6 +18,7 @@ Real-time statistics, progress tracking, and analytics for your conlang developm
 - **Multi-Script Support** - Jawi, Arabic, Tengwar, or any custom writing system
 - **RTL Support** - Automatic right-to-left rendering
 - **Comprehensive Fields** - Native script, romanization, IPA, etymology, gender, tags
+- **IPA Virtual Keyboard** - Click-to-insert vowels, consonants, diacritics, and tone marks
 - **Custom Gender System** - Neutral, Masculine, Feminine, Divine, or user-defined
 - **Full CRUD** - Create, read, update, delete with search
 
@@ -56,13 +57,16 @@ Real-time statistics, progress tracking, and analytics for your conlang developm
 
 ### Prerequisites
 - Node.js 18+
-- npm or yarn
+- npm
 
 ### Installation
 
+> **Important:** Replace `<repository-url>` with the real URL of your GitHub repository or fork.
+> Do not copy `https://github.com/yourusername/glotbase.git`; that was only a placeholder and will return `Repository not found`.
+
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/glotbase.git
+git clone <repository-url>
 cd glotbase
 
 # Install dependencies
@@ -73,6 +77,15 @@ npm run dev
 
 # Open in browser
 http://localhost:5173
+```
+
+PowerShell example after you copy the real URL from GitHub's **Code** button:
+
+```powershell
+git clone https://github.com/<owner>/<repo>.git
+cd .\glotbase
+npm install
+npm run dev
 ```
 
 ### Build for Production
@@ -228,7 +241,6 @@ All RTL (right-to-left) scripts automatically supported.
 - Edit rules functionality
 
 ### 🚧 Planned (v3.0)
-- **IPA Virtual Keyboard** - Click-to-insert IPA symbols
 - **Grammar Wiki** - Markdown documentation
 - **Phonology Editor** - Sound inventory management
 - **Batch Generation** - Multiple root words at once
@@ -252,9 +264,9 @@ Contributions welcome! Areas for contribution:
 - UI translations
 
 ```bash
-# Fork and clone
-git clone https://github.com/yourusername/glotbase.git
-cd glotbase
+# Fork the project on GitHub, then clone your fork
+git clone https://github.com/<your-github-username>/<your-fork-name>.git
+cd <your-fork-name>
 
 # Install and develop
 npm install
@@ -307,8 +319,8 @@ Built with 💜 for conlangers worldwide
 
 ## 📞 Support
 
-- 🐛 [Report Issues](https://github.com/yourusername/glotbase/issues)
-- 💬 [Start Discussion](https://github.com/yourusername/glotbase/discussions)
+- 🐛 Report issues from the **Issues** tab of the repository you cloned.
+- 💬 Start discussions from the **Discussions** tab if it is enabled for that repository.
 
 ---
 
